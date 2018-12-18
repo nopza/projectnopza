@@ -18,7 +18,7 @@ class Header extends Component {
                 <li className="active">
                     <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" className="dropdown-toggle">
                         <i className="fas fa-home"></i>&nbsp;
-                        Home
+                        Register
                     </a>
                     <ul className="collapse list-unstyled" id="homeSubmenu">
                         <li>

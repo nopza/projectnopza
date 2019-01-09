@@ -5,38 +5,90 @@ import '../css/style4.css'
 import '../Page/Page.css'
 import Navheader from '../Header/Navheader';
 
+//AGGrid
 import {AgGridReact} from 'ag-grid-react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
+
+//Camera
+import Camera from 'react-camera';
 
 class SendPatient extends Component {
   constructor(props) {
     super(props);
 
+    var Photo;
+
+    //varaible
+    this.state = { Search: '' };
+    this.state = { THName: '' };
+    this.state = { ENName: '' };
+    this.state = { Brithdate: '' };
+    this.state = { Age: '' };
+    this.state = { PhoneNumber: '' };
+    this.state = { Address: '' };
+    this.state = { Race: '' };
+    this.state = { Nationality: '' };
+    this.state = { Religion: '' };
+    this.state = { IDCardNumber: '' };
+    this.state = { Victim: '' };
+    this.state = { SendTo: '' };
+    this.state = { SendToO: '' };
+    this.state = { Doctor: '' };
+    this.state = { Service: '' };
+
+
     this.state = {
         columnService: [
-            {headerName: "วันที่รับบริการ", field: "วันที่รับบริการ",width :180,checkboxSelection: true,suppressSizeToFit: true},
-            {headerName: "อาการสำคัญ", field: "อาการสำคัญ",width :230},
-            {headerName: "สิทธิรักษา", field: "สิทธิรักษา",width :200},
-            {headerName: "Doctor", field: "Doctor",width :230},
-            {headerName: "Location", field: "Location",width :200}
-        ],
-        rowDataService: [
+            {
+              headerName: "วันที่รับบริการ", 
+              field: "วันที่รับบริการ",
+              // headerCheckboxSelection: true,
+              // checkboxSelection: true,
+              width :200
+            },
+            {
+              headerName: "อาการสำคัญ", 
+              field: "อาการสำคัญ",
+              width :230
+            },
+            {
+              headerName: "สิทธิรักษา", 
+              field: "สิทธิรักษา",
+              width :200
+            },
+            {
+              headerName: "Doctor", 
+              field: "Doctor",
+              width :230
+            },
+            {
+              headerName: "Location", 
+              field: "Location",
+              width :200,
+            }
+          ],
+          defaultColDef: { width: 100 },
+          rowSelection: "multiple",
+          rowDataService: [
             {วันที่รับบริการ: "", อาการสำคัญ: "", สิทธิรักษา: "", Doctor: "", Location: ""},
         ],
+        
         columnVisit: [
-          {headerName: "ลำดับ", field: "ลำดับ",width :140,checkboxSelection: true,suppressSizeToFit: true},
+          {headerName: "ลำดับ", field: "ลำดับ",width :140},
           {headerName: "สิทธิ", field: "สิทธิ",width :300},
           {headerName: "ความคุ้มครอง", field: "ความคุ้มครอง",width :300},
           {headerName: "Contact", field: "Contact",width :300}
         ],
             
-        // เปลี่ยนจาก rowDataVisit เเล้วใช้ fetch ใน fx  componentdidmount ได้ ComponentDidMount() {
-        //           fetch('https://api.myjson.com/bins/15psn9')
+        // เปลี่ยนจาก rowDataVisit เเล้วใช้ fetch ใน fx componentdidmount ได้  => 
+        //       ComponentDidMount() {
+        //           fetch('https://api.myjson.com/bins/15psn9')        *(ตย. api)
         //               .then(result => result.json())
         //               .then(rowData => this.setState({rowData}))
-        //       } แบบนี้ ในการดึงข้อมูลไปใส่ในตาราง
-
+        //       } 
+        // แบบนี้ ในการดึงข้อมูลไปใส่ในตาราง
+        
          rowDataVisit: [
           {วันที่รับบริการ: "", อาการสำคัญ: "", สิทธิรักษา: "", Doctor: "", Location: ""},
         ],
@@ -47,80 +99,194 @@ class SendPatient extends Component {
           {headerName: "", field: "",width :220},
           {headerName: "", field: "",width :220}
         ],
+        
         rowDataAppoint: [
           {วันที่รับบริการ: "", อาการสำคัญ: "", สิทธิรักษา: "", Doctor: "", Location: ""},
         ],
     }
+    this.takePicture = this.takePicture.bind(this);
 }
+
+takePicture() {
+  this.camera.capture()
+  .then(blob => {
+    this.img.src = URL.createObjectURL(blob);
+    this.img.onload = () => { URL.revokeObjectURL(this.src); }
+  })
+}
+
+
+sizeToFit() {
+  this.gridApi.sizeColumnsToFit();
+}
+autoSizeAll() {
+  var allColumnIds = [];
+  this.gridColumnApi.getAllColumns().forEach(function(column) {
+    allColumnIds.push(column.colId);
+  });
+  this.gridColumnApi.autoSizeColumns(allColumnIds);
+}
+
   render() {
+
     return (
       <div className="wrapper">
         <Header />
         <div className='container'>
           <Navheader />
-          <form >
+          <form>
           <div className="card">
             <div className="card-header">
               <h4>ส่งตรวจผู้ป่วย</h4>
             </div>
             <div className="card-body">
+
+              {/*ค้นหา*/}
+
               <div className="card">
                 <div className="card-body">
                   <div className="form-row ">
-                    <div className="form-group  col-md-6">
-                      <label>ค้นหา </label>
-                      <input type='text' className="form-control" />
+                    <div className="d-flex flex-column col-md-8 ">
+                      <div className="form-group  col-md-10">
+                        <label>ค้นหา </label>
+                        <input type='text' className="form-control" name = "Search" />
+                        <br/>
+                        <button type="search" class="btn btn-primary mb-2 mr-sm-2"> ค้นหา </button>
+                        <button type="button" class="btn mb-2 mr-sm-2"> อ่านบัตรประชาชน </button>
+                      </div>
+                    </div>
+                    <div className="d-flex flex-column col-md-1">
+                      <label> <br/><br/><br/></label>
+                        <button type="button" class="btn btn-outline-secondary mt-3 " data-toggle="modal" 
+                        data-target="#exampleModal"> <i class="fas fa-camera"></i> </button>
+                      
+                      {/* Modal */}
+                    
+                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                          <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel"> Picture Capture </h5>
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                  </button>
+                              </div>
+                              <div class="modal-body">
+                                <div class="container-fluid">
+                                  
+                                  <div class="row">
+                                    <div class="col d-flex justify-content-center">
+                                      <div class="card" >
+                                        <div class="card-body">
+                                          <div class = "container" >
+                                            <Camera width = '70%' height = '70%'
+                                              class = "preview"
+                                              ref={(cam) => {
+                                              this.camera = cam;}}> 
+                                            </Camera>
+                                          </div>
+                                          <br/>
+                                          <div class = "container" >
+                                          <div class="form-row">  
+                                            <div className="form-group col-md-12 text-center"> 
+                                              <div class= "captureContainer"  >
+                                                <div class = "captureButton" >
+                                                  <button type="button" class="btn btn-success" onClick={this.takePicture}> ถ่าย </button>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="row">
+                                    <div class="col d-flex justify-content-center">
+                                      <div class="card" >
+                                        <div class="card-body">
+                                          <img class ="captureImage" width = '100%' height = '100%'
+                                           ref={(img) => {
+                                           this.img = img;}}
+                                           screenshotFormat="image/jpeg"
+                                           alt= "imag"/>
+                                        </div>
+                                        
+                                        <div class = "container" >
+                                          <div class="form-row">  
+                                            <div className="form-group col-md-12 text-center"> 
+                                              <div class= "captureContainer"  >
+                                                <div class = "captureButton" >
+                                                  <button type="button" class="btn btn-success"> ถ่ายใหม่ </button>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-primary"> ตกลง </button>
+                                <button type="button" class="btn btn-danger" data-dismiss="modal"> ปิด </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="d-flex flex-column col-md-3 ">
+                        < img src="..." class="rounded float-right" alt="userpicture"/>
+                      </div>
                     </div>
                   </div>
-                  <div className="form-group "> 
-                    <button type="search" class="btn btn-primary mb-2 mr-sm-2"> ค้นหา </button>
-                    <button type="button" class="btn  mb-2 mr-sm-2"> อ่านบัตรประชาชน </button>
-                  </div>
                 </div>
-              </div>
+
+                {/*ประวัติ*/}
 
               <div className="card">
                 <div className="card-body">
                   <div className="form-row ">
                     <div className="form-group col-md-12">
                       <label>ชื่อ-สกุล</label>
-                      <input type='text' className="form-control" />
+                      <input type='text' className="form-control" name = "THName" />
                     </div>
                     <div className="form-group col-md-12">
                       <label>Name</label>
-                      <input type='text' className="form-control" />
+                      <input type='text' className="form-control" name = "ENName"/>
                     </div>
                     <div className="form-group col-md-5">
                       <label>ว ด ป เกิด</label>
-                      <input type='date' className="form-control" />
+                      <input type='date' className="form-control" name = "Brithdate" />
                     </div>
                     <div className="form-group col-md-2">
                       <label>อายุ</label>
-                      <input type='number' className="form-control" />
+                      <input type='number' className="form-control" name = "Age"/>
                     </div>
                     <div className="form-group col-md-5">
                       <label>เบอร์โทร</label>
-                      <input type='number' className="form-control"/>
+                      <input type='number' className="form-control" name = "PhoneNumber"/>
                     </div>
                     <div className="form-group col-md-12">
                       <label>ที่อยู่</label>
-                      <input type='text' className="form-control" />
+                      <input type='text' className="form-control"name = "Address" />
                     </div>
                     <div className="form-group col-md-4">
-                      <label>เชื่อชาติ</label>
-                      <input type="text" className="form-control" />
+                      <label>เชื้อชาติ</label>
+                      <input type="text" className="form-control" name = "Race"/>
                     </div>
                     <div className="form-group col-md-4">
                       <label>สัญชาติ</label>
-                      <input type='text' className="form-control" />
+                      <input type='text' className="form-control"  name = "Nationality" />
                     </div>
                     <div className="form-group col-md-4">
                       <label>ศาสนา</label>
-                      <input type='text' className="form-control"/>
+                      <input type='text' className="form-control" name = "Religion"/>
                     </div>
                     <div className="form-group  col-md-6">
                       <label>เลขบัตรประชาชน </label>
-                      <input type='text' className="form-control" />
+                      <input type='text' className="form-control" name = "IDCardNumber"/>
                     </div>
                   </div>
                   <div className="form-group text-right"> 
@@ -129,7 +295,9 @@ class SendPatient extends Component {
                   </div>
                 </div>
               </div>
-              
+
+              {/*ประวัติการรับบริการ*/}
+
               <div className="card">
                 <div className="card-body">
                   <div className="form-row ">
@@ -141,51 +309,39 @@ class SendPatient extends Component {
                         enableColResize={true}
                         enableSorting={true}
                         enableFilter={true}
-                        rowSelection="multiple"
+                        defaultColDef={this.state.defaultColDef}
+                        suppressRowClickSelection={true}
+                        rowSelection={this.state.rowSelection}
                         columnDefs={this.state.columnAppoint}
                         rowData={this.state.rowDataAppoint}>
                       </AgGridReact>
                     </div>
-              
-                    <div className="form-group col-md-2">    <br/>               
-                      <div className="form-inline"> 
-                        <div class="custom-control custom-checkbox"> 
-                          <input type="checkbox" className="custom-control-input" id="special"/> 
-                          <label className="custom-control-label" for="special"> limit 10 </label>
-                        </div>
-                        
-                      </div>
-                    </div>
-
-                    <div className="form-group col-md-10 text-right">
-                      <fieldset >
-                        <button type="button" class="btn  mt-3"> เลือกใช้สิทธิจาก Visit นี้</button>
-                      </fieldset>
-                    </div>
                     </div>
                   </div>
                 </div>
+
+                {/*อาการ*/}
 
                 <div className="card">
                   <div className="card-body">
                     <div className="form-row ">
                       <div className="form-group col-md-12">
                         <label>อาการสำคัญ</label>
-                        <input type='text' className="form-control" />
+                        <input type='text' className="form-control" name = "Victim"/>
                       </div>
                       <div className="form-group col-md-2">
                         <label>ส่งไปตรวจที่</label>
-                        <input type='text' className="form-control" />
+                        <input type='text' className="form-control"  name = "SendTo"/>
                       </div>
                       <div className="form-group col-md-10">
                         <fieldset >
                           <label><br/></label>
-                          <input type='text' className="form-control" />
+                          <input type='text' className="form-control"name = "SendToO" />
                         </fieldset>
                       </div>
                       <div className=" form-group col-md-12">
                         <label>แพทย์</label>
-                          <select className="form-control">
+                          <select className="form-control" name = "Doctor">
                             <option></option>
                             <option>นาย</option>
                             <option>นาง</option>
@@ -197,7 +353,7 @@ class SendPatient extends Component {
                       </div>
                       <div className=" form-group col-md-5">
                         <label>การมารับบริการ </label>
-                          <select className="form-control">
+                          <select className="form-control" name = "Service">
                             <option></option>
                             <option>มารับบริการเอง</option>
                           </select>
@@ -205,6 +361,8 @@ class SendPatient extends Component {
                     </div>
                   </div>
                 </div>
+
+                {/*สิทธิรักษาพยาบาล*/}
 
                 <div className="card">
                   <div className="card-body">
@@ -217,7 +375,6 @@ class SendPatient extends Component {
                         enableColResize={true}
                         enableSorting={true}
                         enableFilter={true}
-                        rowSelection="multiple"
                         columnDefs={this.state.columnVisit}
                         rowData={this.state.rowDataVisit}>
                       </AgGridReact>
@@ -230,6 +387,9 @@ class SendPatient extends Component {
                     </div>
                   </div>
                 </div>
+
+                {/*ประวัติการนัดหมาย*/}
+
                 <div className="card">
                   <div className="card-body">
                     <div className="form-row ">
@@ -241,7 +401,6 @@ class SendPatient extends Component {
                         enableColResize={true}
                         enableSorting={true}
                         enableFilter={true}
-                        rowSelection="multiple"
                         columnDefs={this.state.columnService}
                         rowData={this.state.rowDataService}>
                       </AgGridReact>
@@ -250,6 +409,7 @@ class SendPatient extends Component {
                   </div>
                 </div>
 
+                {/*เอกสาร*/}
 
                 <div className="card">
                   <div className="card-body">
@@ -339,6 +499,9 @@ class SendPatient extends Component {
                     </div>
                   </div>
                 </div>
+
+                {/*พิมพ์ใบ Visit Slip*/}
+
                 <div className="card">
                   <div className="card-body">
                     <div className="form-row ">
@@ -383,7 +546,6 @@ class SendPatient extends Component {
                 </div>
               </div>
             </div>
-  
           </form>
           <Footer />
         </div>
@@ -391,4 +553,29 @@ class SendPatient extends Component {
     );
   }
 }
+
 export default SendPatient;
+const style = {
+  preview: {
+    position: 'relative',
+  },
+  captureContainer: {
+    display: 'flex',
+    position: 'absolute',
+    justifyContent: 'center',
+    zIndex: 1,
+    bottom: 0,
+    width: '100%'
+  },
+  captureButton: {
+    backgroundColor: '#fff',
+    borderRadius: '50%',
+    height: 56,
+    width: 56,
+    color: '#000',
+    margin: 20
+  },
+  captureImage: {
+    width: '100%',
+  }
+};

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Switch, Route } from 'react-router-dom';
-import Register from '../component/Page/Register';
+import Register from '../component/Page/Register/Register';
 import Home from '../component/Page/Home';
 import SendPatient from '../component/Page/SendPatient';
 import Examination from '../component/Page/Examination';

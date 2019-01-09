@@ -6,7 +6,7 @@ import '../../Page/Page.css'
 import Navheader from '../../Header/Navheader';
 import ScrollUpButton from "react-scroll-up-button";
 // import ScrollToTop from "react-scroll-up";
-import { AvForm } from 'availity-reactstrap-validation';
+import { AvForm} from 'availity-reactstrap-validation';
 
 // import { AgGridReact } from 'ag-grid-react';
 // import 'ag-grid-community/dist/styles/ag-grid.css';
@@ -86,7 +86,7 @@ class Register extends Component {
               </div>
               <div className="form-group col-md-3">
                 <button type="button" className="btn btn-danger ">ลบรายการ</button>&nbsp;&nbsp;&nbsp;&nbsp;
-                <button type="submit" className="btn btn-primary " type="submit">บันทึก</button>&nbsp;&nbsp;&nbsp;&nbsp;     
+                <button type="submit" className="btn btn-primary ">บันทึก</button>&nbsp;&nbsp;&nbsp;&nbsp;     
                 <button type="button" className="btn btn-second ">ยกเลิก</button>   
               </div>
             </div>

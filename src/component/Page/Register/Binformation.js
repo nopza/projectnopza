@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { AgGridReact } from 'ag-grid-react';
+import InputMask from 'react-input-mask';
 
 
 class Binformation extends Component {
@@ -34,7 +35,7 @@ class Binformation extends Component {
             </div>
               <div className="col-md-4">
                 <button className="btn btn-secondary collapsed float-right" type="button" data-toggle="collapse" data-target="#BinfoR" aria-expanded="false" aria-controls="BinfoR">
-                  <i className="fas fa-align-justify" aria-hidden="true"></i>
+                  <i className="fas fa-plus" aria-hidden="true"></i>
                 </button>
               </div>
           </div>
@@ -160,12 +161,12 @@ class Binformation extends Component {
               <div className="form-row">
                 <div className="form-group col-md-2">
                   <label>วันที่ออกบัตร</label>
-                  <input type="text" className="form-control" />
+                  <InputMask type="text" className="form-control" mask="99-99-9999" placeholder="dd-mm-yyyy" />
                 </div>
 
                 <div className="form-group col-md-2">
                   <label>วันบัตรหมดอายุ</label>
-                  <input type="text" className="form-control" />
+                  <InputMask type="text" className="form-control" mask="99-99-9999" placeholder="dd-mm-yyyy" />
                 </div>
 
                 <div className="form-inline">

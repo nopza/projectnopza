@@ -34,7 +34,7 @@ class Cinformation extends Component {
             </div>
               <div className="col-md-4">
                 <button className="btn btn-secondary collapsed float-right" type="button" data-toggle="collapse" data-target="#CinfoR" aria-expanded="false" aria-controls="CinfoR">
-                  <i className="fas fa-align-justify" aria-hidden="true"></i>
+                  <i className="fas fa-plus" aria-hidden="true"></i>
                 </button>
               </div>
           </div>

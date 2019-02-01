@@ -254,3 +254,10 @@ a.article:hover {
     }
 }
 
+.imgPreview{
+    text-align: center;
+    margin: 5px 15px;
+    height: 150px;
+    width: 150px;
+    border-style: ridge;
+  }

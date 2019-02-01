@@ -9,7 +9,7 @@ class ExamDoctor extends Component {
     return (
       <div class="wrapper">
         <Header />
-        <div className="container">
+        <div className="container-fluid">
         <Navheader />
         <div className="card">
           <div className="card-header">

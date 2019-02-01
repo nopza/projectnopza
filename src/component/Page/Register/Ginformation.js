@@ -10,6 +10,7 @@ class Ginformation extends Component {
         super(props);
     
         this.state = {
+          
             columnDefs: [
                 {headerName: "ประเภทบัตร", field: "tcard", width: 310, suppressSizeToFit: true},
                 {headerName: "เลขที่บัตร", field: "idcard" , width: 320},
@@ -24,8 +25,21 @@ class Ginformation extends Component {
                 {tcard: "Hack!", idcard: "7777", sdate: "12/12/2561", edate: "12/12/2662"}
             ]
         }
+        this.handleChangeTitle = this.handleChangeTitle.bind(this);
+        this.handleChangeForname = this.handleChangeForname.bind(this);
     }
     
+    handleChangeTitle = (e,TITLEUID) => {
+      this.setState({ TITLEUID });
+      localStorage.setItem("TITLEUID", TITLEUID);
+      console.log("มาแล้ว :" , TITLEUID)
+    }
+
+    handleChangeForname = (e,Forname) => {
+      localStorage.setItem("Forname", Forname);
+      this.setState({ Forname });
+      console.log("มาแล้ว :" , Forname)
+    }
 
 
 
@@ -39,7 +53,7 @@ class Ginformation extends Component {
           </div>
            <div className="col-md-4">
             <button className="btn btn-secondary float-right" type="button" data-toggle="collapse" data-target="#infoR" aria-expanded="true" aria-controls="infoR">
-              <i className="fas fa-align-justify" aria-hidden="true"></i>
+              <i className="fas fa-plus" aria-hidden="true"></i>
             </button>
             </div>
           </div>
@@ -52,21 +66,21 @@ class Ginformation extends Component {
           <div className="card-body">
             <div className="form-row ">
               <div className=" form-group col-md-2">
-                <AvField name="title" label="คำนำหน้า" type="select" errorMessage="กรุณาเลือกคำนำหน้า" validate={{
-                  required: {value: true}
-                }}><option></option>
-                <option>นาย</option>
-                <option>นาง</option>
-                <option>นางสาว</option>
+                <AvField name="title" label="คำนำหน้า" type="select" errorMessage="กรุณาเลือกคำนำหน้า" onChange={this.handleChangeTitle} value={this.state.TITLEUID} validate={{
+                  required: {value: true} 
+                }}><option value=""></option>
+                <option value="1">นาย</option>
+                <option value="2">นาง</option>
+                <option value="3">นางสาว</option>
                 </AvField>
               </div>
               <div className="form-group col-md-3">
-                <AvField name="name" label="ชื่อ" type="text" errorMessage="กรุณากรอกชื่อ" validate={{
+                <AvField name="name" label="ชื่อ" type="text" errorMessage="กรุณากรอกชื่อ" onChange={this.handleChangeForname} value={this.state.Forname} validate={{
                 required: {value: true}
               }} />
               </div>
               <div className="form-group col-md-3">
-              <AvField name="lastname" label="นามสกุล" type="text" errorMessage="กรุณากรอกนามสกุล" validate={{
+              <AvField name="lastname" label="นามสกุล" type="text" errorMessage="กรุณากรอกนามสกุล"  validate={{
                 required: {value: true}
               }} /> 
               </div>
@@ -86,21 +100,24 @@ class Ginformation extends Component {
           <div className="card-body">
             <div className="form-row ">
               <div className=" form-group col-md-2">
-                <label>Title</label>
-                <select className="form-control">
-                  <option></option>
-                  <option>Mr.</option>
-                  <option>Mrs.</option>
-                  <option>Miss</option>
-                </select>
+                <AvField name="titleE" label="Title" type="select" errorMessage="กรุณาเลือกคำนำหน้า" validate={{
+                  required: {value: true}
+                }}>
+                <option></option>
+                <option>Mr.</option>
+                <option>Mrs.</option>
+                <option>Miss</option>
+                </AvField>
               </div>
               <div className="form-group col-md-3">
-                <label>Name</label>
-                <input type='text' className="form-control"  />
+                <AvField name="nameE" label="Name" type="text" errorMessage="กรุณากรอกชื่อ" validate={{
+                required: {value: true}
+              }} />
               </div>
                 <div className="form-group col-md-3">
-                <label>Lastname</label>
-                <input type='text' className="form-control" />
+                <AvField name="lastnameE" label="Lastname" type="text" errorMessage="กรุณากรอกนามสกุล" validate={{
+                required: {value: true}
+              }} />
               </div>
               <div className="form-group col-md-2">
                 <label>Middlename</label>

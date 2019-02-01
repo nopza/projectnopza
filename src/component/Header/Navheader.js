@@ -19,7 +19,7 @@ class Navheader extends Component {
                     <div className="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul className="nav navbar-nav ml-auto">
                             <li className="nav-item">
-                                <a className="nav-link" href="/">Home</a>
+                                <a className="nav-link" href="/home">Home</a>
                             </li>
                             <li className="nav-item">
                                 <a className="nav-link" href="#">Master</a>
@@ -30,10 +30,13 @@ class Navheader extends Component {
                             <li className="nav-item">
                                 <a className="nav-link" href="#">Setting</a>
                             </li>
+                            <li className="nav-item">
+                                <a className="nav-link" href="/">Log out</a>
+                            </li>
 
                         </ul>
                         <form className="form-inline my-2 my-lg-0">
-                            <input className="form-control mr-sm-0" type="search" placeholder="Search"/>
+                            <input className="form-control mr-sm-0 mr-sm-2" type="search" placeholder="Search"/>
                             <button className="btn btn-outline-success my-2 my-sm-0" type="submit"><img src={sicon} alt="sicon" /></button>
                         </form>                        
                     </div>
